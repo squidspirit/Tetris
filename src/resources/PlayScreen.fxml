@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="800.0" style="-fx-background-color: Black; -fx-border-color: LightGray; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controllers.PlayScreenController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" percentWidth="65.0" />
+    <ColumnConstraints hgrow="SOMETIMES" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <AnchorPane layoutX="74.0" layoutY="80.0" prefHeight="660.0" prefWidth="360.0" style="-fx-background-color: Gray;">
+               <children>
+                  <Pane fx:id="gamePane" layoutX="30.0" layoutY="30.0" prefHeight="600.0" prefWidth="300.0" style="-fx-background-color: LightGray;" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" GridPane.columnIndex="1">
+         <children>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="SCORE: " textFill="#d1d1d1">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="scoreLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" textFill="LIGHTGRAY">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="LINE: " textFill="LIGHTGRAY">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lineLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" textFill="LIGHTGRAY">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="NEXT: " textFill="LIGHTGRAY">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Pane fx:id="nextPane" maxHeight="120.0" maxWidth="120.0" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: LightGray;" />
+         </children>
+         <padding>
+            <Insets bottom="85.0" top="85.0" />
+         </padding>
+      </VBox>
+   </children>
+</GridPane>
