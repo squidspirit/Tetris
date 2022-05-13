@@ -15,16 +15,14 @@ public enum ShapeType {
         {false, false, false, false}
     }, Color.AQUA),
     J(new Boolean[][]{
-        {false, false, false, false},
-        {true , false, false, false},
-        {true , true , true , false},
-        {false, false, false, false}
+        {true , false, false},
+        {true , true , true },
+        {false, false, false}
     }, Color.BLUE),
     L(new Boolean[][]{
-        {false, false, false, false},
-        {false, false, true , false},
-        {true , true , true , false},
-        {false, false, false, false}
+        {false, false, true },
+        {true , true , true },
+        {false, false, false}
     }, Color.ORANGE),
     O(new Boolean[][]{
         {false, false, false, false},
@@ -33,22 +31,19 @@ public enum ShapeType {
         {false, false, false, false}
     }, Color.YELLOW),
     S(new Boolean[][]{
-        {false, false, false, false},
-        {false, true , true , false},
-        {true , true , false, false},
-        {false, false, false, false}
+        {false, true , true },
+        {true , true , false},
+        {false, false, false}
     }, Color.GREEN),
     T(new Boolean[][]{
-        {false, false, false, false},
-        {false, true , false, false},
-        {true , true , true , false},
-        {false, false, false, false}
+        {false, true , false},
+        {true , true , true },
+        {false, false, false}
     }, Color.PURPLE),
     Z(new Boolean[][]{
-        {false, false, false, false},
-        {true , true , false, false},
-        {false, true , true , false},
-        {false, false, false, false}
+        {true , true , false},
+        {false, true , true },
+        {false, false, false}
     }, Color.RED);
 
 

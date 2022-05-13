@@ -32,7 +32,11 @@ public class Vector2D {
     }
 
     public boolean overBound(Vector2D v) {
-        return x >= v.x || y >= v.y;
+        return x > v.x || y > v.y;
+    }
+
+    public boolean overBound(Vector2D v1, Vector2D v2) {
+        return x < v1.x || x > v2.x || y < v1.y || y > v2.y;
     }
 
     @Override

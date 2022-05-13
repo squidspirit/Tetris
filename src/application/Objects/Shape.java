@@ -2,49 +2,72 @@ package application.Objects;
 
 import java.util.ArrayList;
 
+import application.SquareMatrix;
 import application.Vector2D;
 import javafx.scene.layout.Pane;
 
-public class Shape extends Pane {
+public class Shape extends Pane{
 
     private ShapeType shapeType;
     private Pane superParent;
     private int blockSize;
-    
+    private int size;
+    private SquareMatrix<Boolean> blockChart;
     private Vector2D position;
     private Vector2D superParentSize;
     private ArrayList<Vector2D> blocksPosList = new ArrayList<>();
-    private Block[] blocks = new Block[4];
+
+
 
     public <T extends Pane> Shape(ShapeType shapeType, T superParent, int blockSize) {
 
         this.shapeType = shapeType;
         this.superParent = superParent;
         this.blockSize = blockSize;
+        this.size = shapeType.getBlockChart().length;
+        this.blockChart = new SquareMatrix<>(
+            Boolean.class, size, shapeType.getBlockChart()
+        );
 
         superParent.getChildren().add(this);
-        this.position = new Vector2D(3, -3);
+        superParentSize = new Vector2D(
+            superParent.getWidth(),
+            superParent.getHeight()
+        ).devide(blockSize);
+        this.position = new Vector2D(3, -size + 1);
         this.setPosition(this.position);
-        super.setWidth(blockSize * 4);
-        super.setHeight(blockSize * 4);
+        super.setWidth(blockSize * size);
+        super.setHeight(blockSize * size);
 
-        for (Object obj : superParent.getChildren())
-            if (obj instanceof Block)
-                blocksPosList.add(((Block)obj).getPosition());
+        for (Object block : superParent.getChildren())
+            if (block instanceof Block)
+                blocksPosList.add(((Block)block).getPosition());
 
-        int blockCount = 0;
-        for (int i = 0; i < 4; i ++) { // row
-            for (int j = 0; j < 4; j ++) { // col
-                if (shapeType.getBlockChart()[i][j]) {
-                    blocks[blockCount] = new Block(blockSize);
-                    blocks[blockCount].setFill(shapeType.getFill());
-                    super.getChildren().add(blocks[blockCount]);
-                    blocks[blockCount].setPosition(new Vector2D(j, i));
-                    blockCount ++;
-                }
-            }
+        for (int i = 0; i < 4; i ++) {
+            Block block = new Block(blockSize);
+            super.getChildren().add(block);
+            block.setFill(shapeType.getFill());
         }
+        this.setBlockChart(blockChart);
     }
+
+
+
+    private boolean checkFeasible() {
+        for (Object localBlock : this.getChildren())
+            if (position.add(((Block)localBlock).getPosition()).overBound(
+                    new Vector2D(0, -3),
+                    superParentSize.minus(new Vector2D(1, 1))))
+                return false;
+        for (Vector2D globalBlockPos : blocksPosList) {
+            for (Object localBlock : this.getChildren())
+                if (position.add(((Block)localBlock).getPosition()).equals(globalBlockPos))
+                    return false;
+        }
+        return true;
+    }
+
+    public ShapeType getShapeType() { return shapeType; }
 
     public Vector2D getPosition() { return position; }
 
@@ -53,31 +76,61 @@ public class Shape extends Pane {
         super.relocate(position.getX() * blockSize, position.getY() * blockSize);
     }
 
+    public SquareMatrix<Boolean> getBlockChart() { return blockChart; }
+
+    public void setBlockChart(SquareMatrix<Boolean> blockChart) {
+        this.blockChart = blockChart;
+        Vector2D[] posList = new Vector2D[4];
+        int posIndex = 0;
+        for (int i = 0; i < size; i ++)
+            for (int j = 0; j < size; j ++)
+                if (blockChart.getMatrix()[i][j])
+                    posList[posIndex ++] = new Vector2D(j, i);
+        for (Object block : this.getChildren()) {
+            ((Block)block).setPosition(posList[-- posIndex]);
+        }
+    }
+
     public void decompose() {
-        for (Block localBlock : blocks) {
+        for (Object localBlock : this.getChildren()) {
             Block globalBlock = new Block(blockSize);
             superParent.getChildren().add(globalBlock);
-            globalBlock.setPosition(position.add(localBlock.getPosition()));
+            globalBlock.setFill(shapeType.getFill());
+            globalBlock.setPosition(position.add(((Block)localBlock).getPosition()));
         }
+        superParent.getChildren().remove(this);
+        System.gc();
     }
 
     public boolean drop() {
-        superParentSize = new Vector2D(superParent.getWidth(), superParent.getHeight()).devide(blockSize);
-        Vector2D newPosition = position.add(new Vector2D(0, 1));
-        for (Block localBlock : blocks)
-            if (newPosition.add(localBlock.getPosition()).overBound(superParentSize))
-                return false;
-        for (Vector2D globalBlockPos : blocksPosList) {
-            for (Block localBlock : blocks)
-                if (newPosition.add(localBlock.getPosition()).equals(globalBlockPos))
-                    return false;
-        }
-        setPosition(newPosition);
-        return true;
+        Vector2D tmp = position;
+        setPosition(position.add(new Vector2D(0, 1)));
+        if (checkFeasible()) return true;
+        setPosition(tmp);
+        return false;
     }
 
     public boolean rotate() {
+        SquareMatrix<Boolean> tmp = blockChart;
+        setBlockChart(blockChart.rotate());
+        if (checkFeasible()) return true;
+        setBlockChart(tmp);
+        return false;
+    }
 
-        return true;
+    public boolean left() {
+        Vector2D tmp = position;
+        setPosition(position.add(new Vector2D(-1, 0)));
+        if (checkFeasible()) return true;
+        setPosition(tmp);
+        return false;
+    }
+
+    public boolean right() {
+        Vector2D tmp = position;
+        setPosition(position.add(new Vector2D(1, 0)));
+        if (checkFeasible()) return true;
+        setPosition(tmp);
+        return false;
     }
 }
