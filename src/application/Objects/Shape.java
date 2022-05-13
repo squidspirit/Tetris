@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import application.SquareMatrix;
 import application.Vector2D;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 public class Shape extends Pane{
 
@@ -47,6 +48,8 @@ public class Shape extends Pane{
             Block block = new Block(blockSize);
             super.getChildren().add(block);
             block.setFill(shapeType.getFill());
+            block.setStroke(Color.GRAY);
+            block.setStrokeWidth(3);
         }
         this.setBlockChart(blockChart);
     }
@@ -96,6 +99,8 @@ public class Shape extends Pane{
             Block globalBlock = new Block(blockSize);
             superParent.getChildren().add(globalBlock);
             globalBlock.setFill(shapeType.getFill());
+            globalBlock.setStroke(Color.GRAY);
+            globalBlock.setStrokeWidth(3);
             globalBlock.setPosition(position.add(((Block)localBlock).getPosition()));
         }
         superParent.getChildren().remove(this);

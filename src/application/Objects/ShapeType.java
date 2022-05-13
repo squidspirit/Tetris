@@ -34,12 +34,12 @@ public enum ShapeType {
         {false, true , true },
         {true , true , false},
         {false, false, false}
-    }, Color.GREEN),
+    }, Color.LIME),
     T(new Boolean[][]{
         {false, true , false},
         {true , true , true },
         {false, false, false}
-    }, Color.PURPLE),
+    }, Color.MAGENTA),
     Z(new Boolean[][]{
         {true , true , false},
         {false, true , true },
