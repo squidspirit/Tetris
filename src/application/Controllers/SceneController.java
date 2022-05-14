@@ -2,6 +2,7 @@ package application.Controllers;
 
 import java.io.IOException;
 
+import application.Initializable;
 import application.KeyPressed;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,17 +31,20 @@ public class SceneController implements AutoCloseable {
     public void show(Stage stage) throws IOException {
         loader = new FXMLLoader(getClass().getResource(fxmlPath));
         scene = new Scene((Parent)loader.load());
+        Object controller = loader.getController();
         stage.setScene(scene);
         stage.show();
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                Object controller = loader.getController();
                 if (controller instanceof KeyPressed)
                     ((KeyPressed)controller).keyPressed(event);
             }
         });
+
+        if (controller instanceof Initializable)
+            ((Initializable)controller).initialiaze();
     }
 
     public void show(ActionEvent event) throws IOException {

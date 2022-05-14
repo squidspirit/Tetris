@@ -10,41 +10,41 @@ public enum ShapeType {
     // I, J, L, O, S, T, Z;
     I(new Boolean[][]{
         {false, false, false, false},
-        {false, false, false, false},
         {true , true , true , true },
+        {false, false, false, false},
         {false, false, false, false}
-    }, Color.AQUA),
+    }, Color.DARKTURQUOISE),
     J(new Boolean[][]{
         {true , false, false},
         {true , true , true },
         {false, false, false}
-    }, Color.BLUE),
+    }, Color.MEDIUMBLUE),
     L(new Boolean[][]{
         {false, false, true },
         {true , true , true },
         {false, false, false}
-    }, Color.ORANGE),
+    }, Color.CHOCOLATE),
     O(new Boolean[][]{
         {false, false, false, false},
         {false, true , true , false},
         {false, true , true , false},
         {false, false, false, false}
-    }, Color.YELLOW),
+    }, Color.GOLD),
     S(new Boolean[][]{
         {false, true , true },
         {true , true , false},
         {false, false, false}
-    }, Color.LIME),
+    }, Color.GREEN),
     T(new Boolean[][]{
         {false, true , false},
         {true , true , true },
         {false, false, false}
-    }, Color.MAGENTA),
+    }, Color.DARKMAGENTA),
     Z(new Boolean[][]{
         {true , true , false},
         {false, true , true },
         {false, false, false}
-    }, Color.RED);
+    }, Color.DARKRED);
 
 
     private Boolean[][] blockChart;

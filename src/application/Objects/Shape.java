@@ -35,7 +35,9 @@ public class Shape extends Pane{
             superParent.getWidth(),
             superParent.getHeight()
         ).devide(blockSize);
-        this.position = new Vector2D(3, -size + 1);
+        if (shapeType == ShapeType.I)
+            this.position = new Vector2D(3, -size + 2);
+        else this.position = new Vector2D(3, -size + 1);
         this.setPosition(this.position);
         super.setWidth(blockSize * size);
         super.setHeight(blockSize * size);
@@ -47,11 +49,12 @@ public class Shape extends Pane{
         for (int i = 0; i < 4; i ++) {
             Block block = new Block(blockSize);
             super.getChildren().add(block);
-            block.setFill(shapeType.getFill());
-            block.setStroke(Color.GRAY);
-            block.setStrokeWidth(3);
+            block.getRectangle().setFill(shapeType.getFill());
+            block.getRectangle().setStroke(Color.BLACK);
+            block.getRectangle().setStrokeWidth(4);
         }
         this.setBlockChart(blockChart);
+        hideOverBound();
     }
 
 
@@ -70,6 +73,16 @@ public class Shape extends Pane{
         return true;
     }
 
+    public void hideOverBound() {
+        if (this.getPosition().getY() > 0)
+            return;
+        for (Object block : this.getChildren()) {
+            if (((Block)block).getPosition().add(this.getPosition()).getY() < 0)
+                ((Block)block).setVisible(false);
+            else ((Block)block).setVisible(true);
+        }
+    }
+
     public ShapeType getShapeType() { return shapeType; }
 
     public Vector2D getPosition() { return position; }
@@ -77,6 +90,7 @@ public class Shape extends Pane{
     public void setPosition(Vector2D position) {
         this.position = position;
         super.relocate(position.getX() * blockSize, position.getY() * blockSize);
+        hideOverBound();
     }
 
     public SquareMatrix<Boolean> getBlockChart() { return blockChart; }
@@ -92,15 +106,16 @@ public class Shape extends Pane{
         for (Object block : this.getChildren()) {
             ((Block)block).setPosition(posList[-- posIndex]);
         }
+        hideOverBound();
     }
 
     public void decompose() {
         for (Object localBlock : this.getChildren()) {
             Block globalBlock = new Block(blockSize);
             superParent.getChildren().add(globalBlock);
-            globalBlock.setFill(shapeType.getFill());
-            globalBlock.setStroke(Color.GRAY);
-            globalBlock.setStrokeWidth(3);
+            globalBlock.getRectangle().setFill(shapeType.getFill());
+            globalBlock.getRectangle().setStroke(Color.BLACK);
+            globalBlock.getRectangle().setStrokeWidth(4);
             globalBlock.setPosition(position.add(((Block)localBlock).getPosition()));
         }
         superParent.getChildren().remove(this);
@@ -110,7 +125,9 @@ public class Shape extends Pane{
     public boolean drop() {
         Vector2D tmp = position;
         setPosition(position.add(new Vector2D(0, 1)));
-        if (checkFeasible()) return true;
+        if (checkFeasible()) {
+            return true;
+        }
         setPosition(tmp);
         return false;
     }
@@ -118,7 +135,9 @@ public class Shape extends Pane{
     public boolean rotate() {
         SquareMatrix<Boolean> tmp = blockChart;
         setBlockChart(blockChart.rotate());
-        if (checkFeasible()) return true;
+        if (checkFeasible()) {
+            return true;
+        }
         setBlockChart(tmp);
         return false;
     }
