@@ -4,50 +4,83 @@ import java.io.IOException;
 
 import application.Initializable;
 import application.KeyPressed;
-import javafx.event.ActionEvent;
+import application.Pausable;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.fxml.LoadException;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-public class SceneController implements AutoCloseable {
+public class SceneController {
+
+    public static enum Loader {
+
+        PLAY_SCREEN(new FXMLLoader(SceneController.class.getResource("/resources/PlayScreen.fxml"))),
+        PAUSE_SCREEN(new FXMLLoader(SceneController.class.getResource("/resources/PauseScreen.fxml")));
+
+        private FXMLLoader loader;
+        private Scene scene;
+        private Object controller;
+
+        Loader(FXMLLoader loader) {
+            this.loader = loader;
+            try {
+                this.scene = new Scene((Parent)loader.load());
+                this.controller = loader.getController();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        private Scene getScene() { return scene; }
+        private Object getController() { return controller; }
+
+        private void reload() {
+            try {
+                this.scene = new Scene((Parent)loader.load());
+            } catch (LoadException exception) {
+                // Do nothing
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
     
-    private FXMLLoader loader;
-    private String fxmlPath;
-    private Scene scene;
 
-    @Override
-    public void close() throws Exception {
-        System.gc();
+
+    public static Stage stage;
+
+    public static void show(Loader loader) {
+        show(loader, true);
     }
 
-    public SceneController(String fxmlPath) {
-        this.fxmlPath = fxmlPath;
-    }
+    public static void show(Loader loader, boolean newLoad) {
+        if (newLoad) reload(loader);
 
-    public void show(Stage stage) throws IOException {
-        loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        scene = new Scene((Parent)loader.load());
-        Object controller = loader.getController();
-        stage.setScene(scene);
+        stage.setScene(loader.getScene());
         stage.show();
 
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (controller instanceof KeyPressed)
-                    ((KeyPressed)controller).keyPressed(event);
-            }
-        });
+        if (newLoad) {
+            loader.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent event) {
+                    if (loader.getController() instanceof KeyPressed)
+                        ((KeyPressed)loader.getController()).keyPressed(event);
+                }
+            });
 
-        if (controller instanceof Initializable)
-            ((Initializable)controller).initialiaze();
+            if (loader.getController() instanceof Initializable)
+                ((Initializable)loader.getController()).initialiaze();
+        }
+        else {
+            if (loader.getController() instanceof Pausable)
+                ((Pausable)loader.getController()).resume();
+        }
     }
 
-    public void show(ActionEvent event) throws IOException {
-        show((Stage)((Node)event.getSource()).getScene().getWindow());
+    public static void reload(Loader loader) {
+        loader.reload();
     }
 }

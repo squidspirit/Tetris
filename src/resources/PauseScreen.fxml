@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="800.0" spacing="20.0" style="-fx-background-color: Black; -fx-border-color: White; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controllers.PauseScreenController">
+   <children>
+      <Label fx:id="titleLabel" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="PAUSED" textAlignment="CENTER" textFill="#d1d1d1">
+         <font>
+            <Font size="72.0" />
+         </font>
+      </Label>
+      <Label fx:id="subtitleLabel" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="PRESS ESC TO RESUME" textAlignment="CENTER" textFill="#d1d1d1">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </children>
+</VBox>

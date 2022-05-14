@@ -81,6 +81,20 @@
                   <Font size="22.0" />
                </font>
             </Label>
+            <HBox>
+               <children>
+                  <Label style="-fx-font-family: Zpix;" text="UP: &#10;L/R: &#10;DOWN: &#10;SPACE: &#10;ESC: " textAlignment="RIGHT" textFill="#d1d1d1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label style="-fx-font-family: Zpix;" text="ROTATE&#10;MOVE&#10;DROP A BLOCK&#10;DROP TO BUTTOM&#10;PAUSE" textFill="#d1d1d1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
          </children>
          <padding>
             <Insets bottom="85.0" top="85.0" />

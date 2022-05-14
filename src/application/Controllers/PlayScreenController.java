@@ -2,8 +2,10 @@ package application.Controllers;
 
 import application.Initializable;
 import application.KeyPressed;
+import application.Pausable;
 import application.Vector2D;
 import application.Constants.Arguments;
+import application.Controllers.SceneController.Loader;
 import application.Objects.Block;
 import application.Objects.Shape;
 import application.Objects.ShapeType;
@@ -15,7 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class PlayScreenController implements KeyPressed, Initializable {
+public class PlayScreenController implements KeyPressed, Initializable, Pausable {
     
     @FXML private Label levelLabel;
     @FXML private Label scoreLabel;
@@ -40,6 +42,11 @@ public class PlayScreenController implements KeyPressed, Initializable {
     public void initialiaze() {
         init();
         defaultTimer.start();
+    }
+
+    @Override
+    public void resume() {
+        isPlayable = true;
     }
 
     private void init() {
@@ -150,6 +157,10 @@ public class PlayScreenController implements KeyPressed, Initializable {
                 isPlayable = false;
                 while (shape.drop());
                 break;
+            case ESCAPE:
+                isPlayable = false;
+                SceneController.show(Loader.PAUSE_SCREEN, true);
+                break;
             default: return;
         }
     }
@@ -160,6 +171,7 @@ public class PlayScreenController implements KeyPressed, Initializable {
 
         public void handle(long now) {
             // System.out.printf("%d %d\n", accumulatedFrames, now - last);
+            if (!isPlayable) return;
             if (accumulatedFrames >= Arguments.FALL_SPEED[level]) {
                 if (shape == null) {
                     shape = new Shape(nextShape.getShapeType(), gamePane, Arguments.BLOCK_SIZE);

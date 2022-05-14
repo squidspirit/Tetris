@@ -1,7 +1,7 @@
 package application;
 
-import application.Constants.FXMLFiles;
 import application.Controllers.SceneController;
+import application.Controllers.SceneController.Loader;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -14,11 +14,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         stage.setTitle("TETRIS");
         stage.setResizable(false);
-
-        try (SceneController sceneController = new SceneController(FXMLFiles.PLAY_SCREEN)) {
-            sceneController.show(stage);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+        SceneController.stage = stage;
+        SceneController.show(Loader.PLAY_SCREEN, true);
     }
 }
