@@ -1,6 +1,6 @@
-package application.Constants;
+package application;
 
-import application.Vector2D;
+import application.funtions.Vector2D;
 
 final public class Arguments {
     final public static Vector2D SCENE_SIZE = new Vector2D(800, 840);

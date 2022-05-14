@@ -1,4 +1,4 @@
-package application;
+package application.funtions;
 
 public class Vector2D {
 

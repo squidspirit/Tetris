@@ -1,14 +1,15 @@
-package application.Controllers;
+package application.controllers;
 
-import application.Initializable;
-import application.KeyPressed;
-import application.Pausable;
-import application.Vector2D;
-import application.Constants.Arguments;
-import application.Controllers.SceneController.Loader;
-import application.Objects.Block;
-import application.Objects.Shape;
-import application.Objects.ShapeType;
+import application.Arguments;
+import application.controllers.SceneController.Scenes;
+import application.controllers.SoundController.Sounds;
+import application.funtions.Vector2D;
+import application.interfaces.Initializable;
+import application.interfaces.KeyPressed;
+import application.interfaces.Pausable;
+import application.objects.Block;
+import application.objects.Shape;
+import application.objects.ShapeType;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -35,6 +36,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
     private boolean isPlaying;
     private boolean isPlayable;
     private boolean isDead;
+    private boolean interruptTimer;
     private boolean dropLock;
     private Vector2D gamePaneSize;
 
@@ -63,6 +65,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         isPlaying = false;
         isPlayable = false;
         isDead = false;
+        interruptTimer = false;
         dropLock = false;
         gamePane.getChildren().clear();
         nextPane.getChildren().clear();
@@ -114,14 +117,16 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         }
         lineScore += hasRemoved;
         switch (hasRemoved) {
-            case 1: score +=   40; break;
-            case 2: score +=  100; break;
-            case 3: score +=  300; break;
-            case 4: score += 1200; break;
+            case 1: score +=   40; SoundController.play(Sounds.SCORE_SMALL); break;
+            case 2: score +=  100; SoundController.play(Sounds.SCORE_SMALL); break;
+            case 3: score +=  300; SoundController.play(Sounds.SCORE_SMALL); break;
+            case 4: score += 1200; SoundController.play(Sounds.SCORE_BIG); break;
             default: break;
         }
-        if (lineScore >= Arguments.LEVELUP_REQUIRE[level])
+        if (lineScore >= Arguments.LEVELUP_REQUIRE[level]) {
+            SoundController.play(Sounds.LEVELUP);
             levelLabel.setText(String.valueOf(++ level));
+        }
         scoreLabel.setText(String.valueOf(score));
         lineScoreLabel.setText(String.valueOf(lineScore));
         shape = null;
@@ -132,15 +137,12 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         if (!isPlayable) return;
-        if (isDead) {
-            if (keyEvent.getCode() == KeyCode.ENTER)
-                init();
-            else return;
-        }
         if (!isPlaying) {
             if (keyEvent.getCode() == KeyCode.ENTER) {
+                if (isDead) init();
+                SoundController.play(Sounds.START);
                 nextShape = new Shape(ShapeType.getRandom(), nextPane, Arguments.BLOCK_SIZE);
-                nextShape.setPosition(new Vector2D(1, 0));
+                nextShape.setPosition(new Vector2D(1, 1));
                 gameTimer.start();
                 defaultTimer.stop();
                 isPlaying = true;
@@ -149,17 +151,31 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         }
         if (shape == null) return;
         switch (keyEvent.getCode()) {
-            case UP: shape.rotate(); break;
-            case DOWN: shape.drop(); break;
-            case LEFT: shape.left(); break;
-            case RIGHT: shape.right(); break;
+            case LEFT:
+                SoundController.play(Sounds.MOVE);
+                shape.left();
+                break;
+            case RIGHT:
+                SoundController.play(Sounds.MOVE);
+                shape.right();
+                break;
+            case UP:
+                SoundController.play(Sounds.MOVE);
+                shape.rotate();
+                break;
+            case DOWN:
+                SoundController.play(Sounds.MOVE);
+                interruptTimer = true;
+                shape.drop();
+                break;
             case SPACE:
-                isPlayable = false;
+                interruptTimer = true;
                 while (shape.drop());
                 break;
             case ESCAPE:
                 isPlayable = false;
-                SceneController.show(Loader.PAUSE_SCREEN, true);
+                SoundController.play(Sounds.PAUSE_IN);
+                SceneController.show(Scenes.PAUSE_SCREEN, true);
                 break;
             default: return;
         }
@@ -172,17 +188,20 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         public void handle(long now) {
             // System.out.printf("%d %d\n", accumulatedFrames, now - last);
             if (!isPlayable) return;
-            if (accumulatedFrames >= Arguments.FALL_SPEED[level]) {
+            if (interruptTimer || accumulatedFrames >= Arguments.FALL_SPEED[level]) {
                 if (shape == null) {
                     shape = new Shape(nextShape.getShapeType(), gamePane, Arguments.BLOCK_SIZE);
                     nextPane.getChildren().clear();
                     nextShape = new Shape(ShapeType.getRandom(), nextPane, Arguments.BLOCK_SIZE);
-                    nextShape.setPosition(new Vector2D(1, 0));
+                    nextShape.setPosition(new Vector2D(1, 1));
                     if (!shape.drop()) removeLinesAndDead();
                 }
-                else if (!shape.drop())
+                else if (!shape.drop()) {
+                    SoundController.play(Sounds.LAND);
                     removeLinesAndDead();
+                }
                 if (shape != null) accumulatedFrames = 0;
+                interruptTimer = false;
             }
             else accumulatedFrames ++;
             // last = now;
@@ -235,6 +254,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         };
 
         public void start() {
+            SoundController.play(Sounds.BORDER);
             isPlayable = false;
             boardDone = false;        
             boarderPane.getChildren().clear();

@@ -1,8 +1,9 @@
-package application.Controllers;
+package application.controllers;
 
-import application.Initializable;
-import application.KeyPressed;
-import application.Controllers.SceneController.Loader;
+import application.controllers.SceneController.Scenes;
+import application.controllers.SoundController.Sounds;
+import application.interfaces.Initializable;
+import application.interfaces.KeyPressed;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -23,7 +24,8 @@ public class PauseScreenController implements KeyPressed, Initializable {
     public void keyPressed(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.ESCAPE) {
             defaultTimer.stop();
-            SceneController.show(Loader.PLAY_SCREEN, false);
+            SoundController.play(Sounds.PAUSE_OUT);
+            SceneController.show(Scenes.PLAY_SCREEN, false);
         }
     }
 

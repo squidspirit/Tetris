@@ -1,4 +1,4 @@
-package application.Objects;
+package application.objects;
 
 import java.util.Random;
 

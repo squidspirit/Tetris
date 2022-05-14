@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="800.0" style="-fx-background-color: Black; -fx-border-color: White; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controllers.PlayScreenController">
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="800.0" style="-fx-background-color: Black; -fx-border-color: White; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.PlayScreenController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" percentWidth="60.0" />
     <ColumnConstraints hgrow="SOMETIMES" />
@@ -30,58 +30,58 @@
          <children>
             <HBox alignment="CENTER_LEFT">
                <children>
-                  <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="LEVEL: " textFill="#d1d1d1">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="levelLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" textFill="LIGHTGRAY">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="LEVEL: " textAlignment="RIGHT" textFill="#d1d1d1">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="SCORE: " textAlignment="RIGHT" textFill="#d1d1d1">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="LINE: " textAlignment="RIGHT" textFill="LIGHTGRAY">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="NEXT: " textAlignment="RIGHT" textFill="LIGHTGRAY">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <Pane fx:id="nextPane" maxHeight="150.0" maxWidth="150.0" prefHeight="150.0" prefWidth="150.0" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label fx:id="levelLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" textFill="LIGHTGRAY">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="scoreLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" textFill="LIGHTGRAY">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lineScoreLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" textFill="LIGHTGRAY">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT">
-               <children>
-                  <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="SCORE: " textFill="#d1d1d1">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="scoreLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" textFill="LIGHTGRAY">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT">
-               <children>
-                  <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="LINE: " textFill="LIGHTGRAY">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lineScoreLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" textFill="LIGHTGRAY">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="NEXT: " textFill="LIGHTGRAY">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Label>
-            <Pane fx:id="nextPane" maxHeight="120.0" maxWidth="150.0" prefHeight="120.0" prefWidth="150.0" />
             <Label fx:id="startLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="PRESS ENTER TO START" textFill="#d1d1d1">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <HBox>
+            <HBox alignment="CENTER_LEFT">
                <children>
                   <Label style="-fx-font-family: Zpix;" text="UP: &#10;L/R: &#10;DOWN: &#10;SPACE: &#10;ESC: " textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>

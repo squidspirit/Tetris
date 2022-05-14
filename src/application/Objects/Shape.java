@@ -1,9 +1,9 @@
-package application.Objects;
+package application.objects;
 
 import java.util.ArrayList;
 
-import application.SquareMatrix;
-import application.Vector2D;
+import application.funtions.SquareMatrix;
+import application.funtions.Vector2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -74,7 +74,7 @@ public class Shape extends Pane{
     }
 
     public void hideOverBound() {
-        if (this.getPosition().getY() > 0)
+        if (this.getPosition().getY() > 1)
             return;
         for (Object block : this.getChildren()) {
             if (((Block)block).getPosition().add(this.getPosition()).getY() < 0)

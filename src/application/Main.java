@@ -1,7 +1,7 @@
 package application;
 
-import application.Controllers.SceneController;
-import application.Controllers.SceneController.Loader;
+import application.controllers.SceneController;
+import application.controllers.SceneController.Scenes;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -15,6 +15,6 @@ public class Main extends Application {
         stage.setTitle("TETRIS");
         stage.setResizable(false);
         SceneController.stage = stage;
-        SceneController.show(Loader.PLAY_SCREEN, true);
+        SceneController.show(Scenes.PLAY_SCREEN, true);
     }
 }
