@@ -5,10 +5,13 @@ import java.net.URL;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.Line;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
 
 public class SoundController {
     
-    public static enum Sounds {
+    public enum Sounds {
         
         BORDER(SoundController.class.getResource("/resources/sounds/border.wav")),
         START(SoundController.class.getResource("/resources/sounds/start.wav")),
@@ -22,41 +25,53 @@ public class SoundController {
         BGM(SoundController.class.getResource("/resources/sounds/bgm.wav"));
         
         private URL path;
+        private Clip loopClip;
 
         Sounds(URL path) {
             this.path = path;
         }
 
-        private URL getPath() { return path; }
-    }
-
-
-    private Clip loopClip;
-
-    private static Clip getClip(Sounds sound) {
-        AudioInputStream audioStream;
-        Clip clip = null;
-        try {
-            audioStream = AudioSystem.getAudioInputStream(sound.getPath());
-            clip = AudioSystem.getClip();
-            clip.open(audioStream);
-        } catch (Exception exception) {
-            exception.printStackTrace();
+        private class CloseClipWhenDone implements LineListener {
+            @Override
+            public void update(LineEvent event) {
+                if (event.getType().equals(LineEvent.Type.STOP)) {
+                    Line soundClip = event.getLine();
+                    soundClip.close();
+                }
+            }
         }
-        return clip;
+
+        private synchronized Clip getClip() {
+            AudioInputStream audioStream;
+            Clip clip = null;
+            try {
+                audioStream = AudioSystem.getAudioInputStream(path);
+                clip = AudioSystem.getClip();
+                clip.addLineListener(new CloseClipWhenDone());
+                clip.open(audioStream);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            loopClip = clip;
+            return clip;
+        }
+
+        private Clip getLoopClip() {
+            return loopClip;
+        }
     }
 
     public static void play(Sounds sound) {
-        getClip(sound).start();
+        sound.getClip().start();
     }
 
-    public void playloop(Sounds sound) {
-        loopClip = getClip(sound);
+    public static void playloop(Sounds sound) {
+        Clip loopClip = sound.getClip();
         loopClip.loop(-1);
     }
 
-    public void stoploop() {
-        loopClip.stop();
+    public static void stoploop(Sounds sound) {
+        sound.getLoopClip().close();
     }
 }
 

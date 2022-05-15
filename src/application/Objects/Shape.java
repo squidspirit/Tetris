@@ -119,7 +119,6 @@ public class Shape extends Pane{
             globalBlock.setPosition(position.add(((Block)localBlock).getPosition()));
         }
         superParent.getChildren().remove(this);
-        System.gc();
     }
 
     public boolean drop() {

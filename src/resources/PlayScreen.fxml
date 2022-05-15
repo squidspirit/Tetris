@@ -52,7 +52,6 @@
                               <Font size="30.0" />
                            </font>
                         </Label>
-                        <Pane fx:id="nextPane" maxHeight="150.0" maxWidth="150.0" prefHeight="150.0" prefWidth="150.0" />
                      </children>
                   </VBox>
                   <VBox spacing="10.0">
@@ -76,6 +75,7 @@
                   </VBox>
                </children>
             </HBox>
+            <Pane fx:id="nextPane" maxHeight="150.0" maxWidth="150.0" prefHeight="150.0" prefWidth="150.0" />
             <Label fx:id="startLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="PRESS ENTER TO START" textFill="#d1d1d1">
                <font>
                   <Font size="22.0" />
@@ -95,7 +95,7 @@
                   </Label>
                </children>
             </HBox>
-            <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="POWER BY SQUIDSPIRIT" textFill="#d1d1d1">
+            <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="POWERED BY SQUIDSPIRIT" textFill="#d1d1d1">
                <font>
                   <Font size="22.0" />
                </font>

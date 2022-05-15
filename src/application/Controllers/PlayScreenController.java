@@ -45,7 +45,6 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
     private boolean isDead;
     private boolean dropLock;
     private Vector2D gamePaneSize;
-    private SoundController soundController = new SoundController();
 
     @Override
     public void initialiaze() {
@@ -64,11 +63,11 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
             gamePane.getHeight()
         ).devide(Arguments.BLOCK_SIZE);
         level = 0;
-        levelLabel.setText(String.valueOf(level));
+        levelLabel.setText(String.format("%03d", level));
         score = 0;
-        scoreLabel.setText(String.valueOf(score));
+        scoreLabel.setText(String.format("%06d", score));
         lineScore = 0;
-        lineScoreLabel.setText(String.valueOf(lineScore));
+        lineScoreLabel.setText(String.format("%06d", lineScore));
         interruptTimer = -1;
         isPlaying = false;
         isPlayable = false;
@@ -89,7 +88,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         isPlaying = false;
         isPlayable = false;
         isDead = true;
-        soundController.stoploop();
+        SoundController.stoploop(Sounds.BGM);
         gameTimer.stop();
         defaultTimer.start();
     }
@@ -121,6 +120,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
                             block.setPosition(block.getPosition().add(new Vector2D(0, 1)));
                 gamePane.getChildren().removeAll(blocks[i]);
                 hasRemoved ++;
+                System.gc();
             }
         }
         lineScore += hasRemoved;
@@ -137,10 +137,10 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         }
         if (lineScore >= Arguments.LEVELUP_REQUIRE[level]) {
             SoundController.play(Sounds.LEVELUP);
-            levelLabel.setText(String.valueOf(++ level));
+            levelLabel.setText(String.format("%03d", ++ level));
         }
-        scoreLabel.setText(String.valueOf(score));
-        lineScoreLabel.setText(String.valueOf(lineScore));
+        scoreLabel.setText(String.format("%06d", score));
+        lineScoreLabel.setText(String.format("%06d", lineScore));
         shape = null;
         dropLock = false;
         isPlayable = true;
@@ -155,7 +155,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
                 SoundController.play(Sounds.START);
                 nextShape = new Shape(ShapeType.getRandom(), nextPane, Arguments.BLOCK_SIZE);
                 nextShape.setPosition(new Vector2D(1, 1));
-                soundController.playloop(Sounds.BGM);
+                SoundController.playloop(Sounds.BGM);
                 gameTimer.start();
                 defaultTimer.stop();
                 isPlaying = true;
@@ -178,8 +178,8 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
                 break;
             case DOWN:
                 SoundController.play(Sounds.MOVE);
-                interruptTimer = 0;
-                shape.drop();
+                if (shape.drop()) interruptTimer = 0;
+                else interruptTimer = Arguments.FALL_SPEED[level];
                 break;
             case SPACE:
                 interruptTimer = Arguments.FALL_SPEED[level];
@@ -211,14 +211,12 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
                     nextPane.getChildren().clear();
                     nextShape = new Shape(ShapeType.getRandom(), nextPane, Arguments.BLOCK_SIZE);
                     nextShape.setPosition(new Vector2D(1, 1));
-                    if (!shape.drop()) removeLinesAndDead();
                 }
                 else if (!shape.drop()) {
                     SoundController.play(Sounds.LAND);
                     removeLinesAndDead();
                 }
                 if (shape != null) accumulatedFrames = 0;
-                // interruptTimer = false;
             }
             else accumulatedFrames ++;
             // last = now;

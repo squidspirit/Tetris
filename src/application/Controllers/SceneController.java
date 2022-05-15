@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 public class SceneController {
 
-    public static enum Scenes {
+    public enum Scenes {
 
         PLAY_SCREEN(new FXMLLoader(SceneController.class.getResource("/resources/PlayScreen.fxml"))),
         PAUSE_SCREEN(new FXMLLoader(SceneController.class.getResource("/resources/PauseScreen.fxml")));
