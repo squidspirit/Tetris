@@ -1,5 +1,8 @@
 package application.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import application.controllers.SceneController.Scenes;
 import application.controllers.SoundController.Sounds;
 import application.functions.Vector2D;
@@ -24,11 +27,25 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class PlayScreenController implements KeyPressed, Initializable, Pausable {
-    
+     
+    @FXML private Label statusILabel;
+    @FXML private Label statusJLabel;
+    @FXML private Label statusLLabel;
+    @FXML private Label statusOLabel;
+    @FXML private Label statusSLabel;
+    @FXML private Label statusTLabel;
+    @FXML private Label statusZLabel;
     @FXML private Label levelLabel;
     @FXML private Label scoreLabel;
     @FXML private Label lineScoreLabel;
     @FXML private Label startLabel;
+    @FXML private Pane statusIPane;
+    @FXML private Pane statusJPane;
+    @FXML private Pane statusLPane;
+    @FXML private Pane statusOPane;
+    @FXML private Pane statusSPane;
+    @FXML private Pane statusTPane;
+    @FXML private Pane statusZPane;
     @FXML private Pane boarderPane;
     @FXML private Pane gamePane;
     @FXML private Pane nextPane;
@@ -45,9 +62,11 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
     private boolean isDead;
     private boolean dropLock;
     private Vector2D gamePaneSize;
+    private ShapeCount shapeConut;
 
     @Override
     public void initialiaze() {
+        shapeConut = new ShapeCount();
         init();
         defaultTimer.start();
     }
@@ -73,6 +92,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         isPlayable = false;
         isDead = false;
         dropLock = false;
+        shapeConut.reset();
         gamePane.getChildren().clear();
         nextPane.getChildren().clear();
         System.gc();
@@ -208,6 +228,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
             if (accumulatedFrames >= Arguments.FALL_SPEED[level]) {
                 if (shape == null) {
                     shape = new Shape(nextShape.getShapeType(), gamePane, Arguments.BLOCK_SIZE);
+                    shapeConut.accumulate(shape.getShapeType());
                     nextPane.getChildren().clear();
                     nextShape = new Shape(ShapeType.getRandom(), nextPane, Arguments.BLOCK_SIZE);
                     nextShape.setPosition(new Vector2D(1, 1));
@@ -315,4 +336,52 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
             super.stop();
         };
     };
+
+
+
+    private class ShapeCount {
+
+        private class ShapeStatus {
+
+            public Label label;
+            public Pane pane;
+            public int count;
+
+            public ShapeStatus(Label label, Pane pane, int count) {
+                this.label = label;
+                this.pane = pane;
+                this.count = count;
+            }
+        }
+
+        private Map<ShapeType, ShapeStatus> map = new HashMap<>();
+
+        public ShapeCount() {
+            map.put(ShapeType.I, new ShapeStatus(statusILabel, statusIPane, 0));
+            map.put(ShapeType.J, new ShapeStatus(statusJLabel, statusJPane, 0));
+            map.put(ShapeType.L, new ShapeStatus(statusLLabel, statusLPane, 0));
+            map.put(ShapeType.O, new ShapeStatus(statusOLabel, statusOPane, 0));
+            map.put(ShapeType.S, new ShapeStatus(statusSLabel, statusSPane, 0));
+            map.put(ShapeType.T, new ShapeStatus(statusTLabel, statusTPane, 0));
+            map.put(ShapeType.Z, new ShapeStatus(statusZLabel, statusZPane, 0));
+            for (Map.Entry<ShapeType, ShapeStatus> entry : map.entrySet()) {
+                Shape shape = new Shape(entry.getKey(), entry.getValue().pane, Arguments.BLOCK_SIZE);
+                if (entry.getKey() == ShapeType.I) shape.setPosition(new Vector2D(0, 0));
+                else if (entry.getKey() == ShapeType.O) shape.setPosition(new Vector2D(0, -1));
+                else shape.setPosition(new Vector2D(1, 0));
+            }
+        }
+
+        public void accumulate(ShapeType shapeType) {
+            ShapeStatus status = map.get(shapeType);
+            status.label.setText(String.format("%03d", ++ status.count));
+        }
+
+        public void reset() {
+            for (ShapeStatus status : map.values()) {
+                status.count = 0;
+                status.label.setText(String.format("%03d", status.count));
+            }
+        }
+    }
 }

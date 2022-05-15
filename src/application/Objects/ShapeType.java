@@ -18,7 +18,7 @@ public enum ShapeType {
         {true , false, false},
         {true , true , true },
         {false, false, false}
-    }, Color.MEDIUMBLUE),
+    }, Color.ROYALBLUE),
     L(new Boolean[][]{
         {false, false, true },
         {true , true , true },
@@ -29,7 +29,7 @@ public enum ShapeType {
         {false, true , true , false},
         {false, true , true , false},
         {false, false, false, false}
-    }, Color.GOLD),
+    }, Color.GOLDENROD),
     S(new Boolean[][]{
         {false, true , true },
         {true , true , false},
