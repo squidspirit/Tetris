@@ -2,8 +2,8 @@ package application.objects;
 
 import java.util.ArrayList;
 
-import application.funtions.SquareMatrix;
-import application.funtions.Vector2D;
+import application.functions.SquareMatrix;
+import application.functions.Vector2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 

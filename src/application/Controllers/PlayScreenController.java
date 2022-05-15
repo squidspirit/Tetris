@@ -1,20 +1,25 @@
 package application.controllers;
 
-import application.Arguments;
 import application.controllers.SceneController.Scenes;
 import application.controllers.SoundController.Sounds;
-import application.funtions.Vector2D;
+import application.functions.Vector2D;
 import application.interfaces.Initializable;
 import application.interfaces.KeyPressed;
 import application.interfaces.Pausable;
+import application.main.Arguments;
 import application.objects.Block;
 import application.objects.Shape;
 import application.objects.ShapeType;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -27,18 +32,20 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
     @FXML private Pane boarderPane;
     @FXML private Pane gamePane;
     @FXML private Pane nextPane;
+    @FXML private GridPane root;
 
     private int level;
     private int score;
     private int lineScore;
+    private int interruptTimer;
     private Shape shape;
     private Shape nextShape;
     private boolean isPlaying;
     private boolean isPlayable;
     private boolean isDead;
-    private boolean interruptTimer;
     private boolean dropLock;
     private Vector2D gamePaneSize;
+    private SoundController soundController = new SoundController();
 
     @Override
     public void initialiaze() {
@@ -62,10 +69,10 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         scoreLabel.setText(String.valueOf(score));
         lineScore = 0;
         lineScoreLabel.setText(String.valueOf(lineScore));
+        interruptTimer = -1;
         isPlaying = false;
         isPlayable = false;
         isDead = false;
-        interruptTimer = false;
         dropLock = false;
         gamePane.getChildren().clear();
         nextPane.getChildren().clear();
@@ -82,6 +89,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         isPlaying = false;
         isPlayable = false;
         isDead = true;
+        soundController.stoploop();
         gameTimer.stop();
         defaultTimer.start();
     }
@@ -120,7 +128,11 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
             case 1: score +=   40; SoundController.play(Sounds.SCORE_SMALL); break;
             case 2: score +=  100; SoundController.play(Sounds.SCORE_SMALL); break;
             case 3: score +=  300; SoundController.play(Sounds.SCORE_SMALL); break;
-            case 4: score += 1200; SoundController.play(Sounds.SCORE_BIG); break;
+            case 4:
+                score += 1200;
+                SoundController.play(Sounds.SCORE_BIG);
+                flashTimer.start();
+                break;
             default: break;
         }
         if (lineScore >= Arguments.LEVELUP_REQUIRE[level]) {
@@ -143,6 +155,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
                 SoundController.play(Sounds.START);
                 nextShape = new Shape(ShapeType.getRandom(), nextPane, Arguments.BLOCK_SIZE);
                 nextShape.setPosition(new Vector2D(1, 1));
+                soundController.playloop(Sounds.BGM);
                 gameTimer.start();
                 defaultTimer.stop();
                 isPlaying = true;
@@ -165,11 +178,11 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
                 break;
             case DOWN:
                 SoundController.play(Sounds.MOVE);
-                interruptTimer = true;
+                interruptTimer = 0;
                 shape.drop();
                 break;
             case SPACE:
-                interruptTimer = true;
+                interruptTimer = Arguments.FALL_SPEED[level];
                 while (shape.drop());
                 break;
             case ESCAPE:
@@ -188,7 +201,11 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         public void handle(long now) {
             // System.out.printf("%d %d\n", accumulatedFrames, now - last);
             if (!isPlayable) return;
-            if (interruptTimer || accumulatedFrames >= Arguments.FALL_SPEED[level]) {
+            if (interruptTimer >= 0) {
+                accumulatedFrames = interruptTimer;
+                interruptTimer = -1;
+            }
+            if (accumulatedFrames >= Arguments.FALL_SPEED[level]) {
                 if (shape == null) {
                     shape = new Shape(nextShape.getShapeType(), gamePane, Arguments.BLOCK_SIZE);
                     nextPane.getChildren().clear();
@@ -201,7 +218,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
                     removeLinesAndDead();
                 }
                 if (shape != null) accumulatedFrames = 0;
-                interruptTimer = false;
+                // interruptTimer = false;
             }
             else accumulatedFrames ++;
             // last = now;
@@ -261,6 +278,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
             boardBlockIndex = new Vector2D(0, 0);
             nextBlockDirection = new Vector2D(1, 0);
             accumulatedFrames = 0;
+            flashTimer.start();
             super.start();
         };
 
@@ -272,8 +290,31 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
     };
 
     AnimationTimer flashTimer = new AnimationTimer() {
-        public void handle(long now) {
+        private int accumulatedFrames;
+        private int flashed;
 
+        public void handle(long now) {
+            if (flashed == 2) this.stop();
+            if (accumulatedFrames == 4)
+                root.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+            else if (accumulatedFrames == 8) {
+                root.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+                accumulatedFrames = 0;
+                flashed ++;
+            }
+            accumulatedFrames ++;
+        };
+
+        public void start() {
+            accumulatedFrames = 0;
+            flashed = 0;
+            root.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+            super.start();
+        };
+
+        public void stop() {
+            root.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+            super.stop();
         };
     };
 }

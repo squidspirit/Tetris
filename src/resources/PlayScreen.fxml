@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="800.0" style="-fx-background-color: Black; -fx-border-color: White; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.PlayScreenController">
+<GridPane fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="800.0" style="-fx-background-color: Black; -fx-border-color: White; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.PlayScreenController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" percentWidth="60.0" />
     <ColumnConstraints hgrow="SOMETIMES" />
@@ -26,7 +26,7 @@
             <Pane fx:id="gamePane" layoutX="84.0" layoutY="110.0" prefHeight="600.0" prefWidth="300.0" />
          </children>
       </AnchorPane>
-      <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" GridPane.columnIndex="1">
+      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="20.0" GridPane.columnIndex="1">
          <children>
             <HBox alignment="CENTER_LEFT">
                <children>
@@ -95,6 +95,11 @@
                   </Label>
                </children>
             </HBox>
+            <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="POWER BY SQUIDSPIRIT" textFill="#d1d1d1">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
          </children>
          <padding>
             <Insets bottom="85.0" top="85.0" />

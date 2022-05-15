@@ -1,6 +1,6 @@
 package application.objects;
 
-import application.funtions.Vector2D;
+import application.functions.Vector2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
