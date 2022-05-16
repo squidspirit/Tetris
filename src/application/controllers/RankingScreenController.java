@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import application.client.Client;
 import application.controllers.SceneController.Scenes;
+import application.controllers.SoundController.Sounds;
 import application.interfaces.Initializable;
 import application.interfaces.KeyPressed;
 import application.main.Arguments;
@@ -16,11 +17,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
 public class RankingScreenController implements KeyPressed, Initializable {
-    
+
+    final private String ENTER_HINT = "ENTER YOUR NAME TO UPLOAD\nYOUR SCORE TO THE SERVER";
+    final private String ESCAPE_HINT = "PRESS ESC TO BACK TO GAME\n ";
+
     @FXML private Label scoreLabel;
     @FXML private Label nameLabel;
     @FXML private Label hintLabel;
     @FXML private Label cursorLabel;
+    @FXML private Label chartTitleLabel;
     @FXML private VBox boardVBox;
     
     private boolean enterLock;
@@ -36,11 +41,14 @@ public class RankingScreenController implements KeyPressed, Initializable {
         enterLock = false;
         score = ((PlayScreenController)SceneController.getController(Scenes.PLAY_SCREEN)).getScore();
         scoreLabel.setText(String.format("%06d", score));
+        chartTitleLabel.setText(String.format("%3s %6s %10s", "ORD", "SCORE", "NAME"));
+        hintLabel.setText(ENTER_HINT);
         dataList = requestLeaderBoard();
         boardVBox.getChildren().clear();
         leaderBoard = new LeaderBoard(dataList);
         boardVBox.getChildren().add(leaderBoard);
         cursorTimer.start();
+        SoundController.play(Sounds.PAUSE_IN);
     }
 
     private void updateLeaderBoard() {
@@ -51,13 +59,22 @@ public class RankingScreenController implements KeyPressed, Initializable {
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.SPACE)
+            SceneController.show(Scenes.RANKING_SCREEN, true);
+        
         if (keyEvent.getCode() == KeyCode.ESCAPE) {
             SceneController.show(Scenes.PLAY_SCREEN, false);
+            SoundController.play(Sounds.PAUSE_OUT);
         }
+        else if (keyEvent.getCode() == KeyCode.UP) 
+            leaderBoard.scrollUp();
+        else if (keyEvent.getCode() == KeyCode.DOWN)
+            leaderBoard.scrollDown();
         
         String keyText = keyEvent.getText().toUpperCase();
-        if (enterLock) return;
-        if (keyText.length() > 0 && keyText.charAt(0) >= 'A' && keyText.charAt(0) <= 'Z') {
+        if (enterLock || dataList.isEmpty()) return;
+        if (keyText.length() > 0 && name.length() <= 10 &&
+                keyText.charAt(0) >= 'A' && keyText.charAt(0) <= 'Z') {
             name += keyText;
             nameLabel.setText(name);
         }
@@ -68,6 +85,8 @@ public class RankingScreenController implements KeyPressed, Initializable {
         else if (keyEvent.getCode() == KeyCode.ENTER) {
             if (name.length() > 0) {
                 enterLock = true;
+                hintLabel.setText(ESCAPE_HINT);
+                hintTimer.start();
                 sendData(String.format("%06d,%s", score, name));
                 updateLeaderBoard();
             }
@@ -80,6 +99,7 @@ public class RankingScreenController implements KeyPressed, Initializable {
         public void handle(long now) {
             if (enterLock)
                 cursorTimer.stop();
+
             if (accumulatedFrames == 40)
                 cursorLabel.setVisible(false);
             else if (accumulatedFrames == 80) {
@@ -91,14 +111,31 @@ public class RankingScreenController implements KeyPressed, Initializable {
 
         public void start() {
             accumulatedFrames = 0;
-            hintLabel.setVisible(true);
             super.start();
         };
 
         public void stop() {
             cursorLabel.setVisible(false);
-            hintLabel.setVisible(false);
             super.stop();
+        };
+    };
+
+    AnimationTimer hintTimer = new AnimationTimer() {
+        private int accumulatedFrames;
+        
+        public void handle(long now) {
+            if (accumulatedFrames == 40)
+                hintLabel.setVisible(false);
+            else if (accumulatedFrames == 80) {
+                hintLabel.setVisible(true);
+                accumulatedFrames = 0;
+            }
+            accumulatedFrames ++;
+        };
+
+        public void start() {
+            accumulatedFrames = 0;
+            super.start();
         };
     };
 
@@ -127,7 +164,7 @@ public class RankingScreenController implements KeyPressed, Initializable {
             if (!client.send("SEND").equals("ACCEPT")) throw new Exception();
             if (!client.send(data).equals("ACCEPT")) throw new Exception();
         } catch (Exception exception) {
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
     }
 }

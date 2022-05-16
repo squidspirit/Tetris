@@ -10,15 +10,15 @@ import javafx.scene.text.Font;
 
 public class LeaderBoard extends VBox {
 
-    final private int MAX_ITEM = 15;
+    final private int MAX_ITEM = 13;
     
     private ArrayList<String> list;
     private Label[] labels = new Label[MAX_ITEM];
-    private int index;
+    private int firstIndex;
 
     public LeaderBoard(ArrayList<String> list) {
         this.list = list;
-        this.index = 0;
+        this.firstIndex = 0;
 
         super.setAlignment(Pos.TOP_CENTER);
         super.setSpacing(10);
@@ -40,6 +40,20 @@ public class LeaderBoard extends VBox {
         this.update();
     }
 
+    public void scrollUp() {
+        if (firstIndex > 0) {
+            firstIndex --;
+            this.update();
+        }
+    }
+
+    public void scrollDown() {
+        if (firstIndex < list.size() - MAX_ITEM) {
+            firstIndex ++;
+            this.update();
+        }
+    }
+
 
 
     private void update() {
@@ -51,8 +65,8 @@ public class LeaderBoard extends VBox {
             return;
         }
 
-        for (int i = index; i < MAX_ITEM && i < list.size(); i ++) {
-            labels[i].setText(String.format("%03d %s", i + 1, list.get(i)));
+        for (int i = 0; i < MAX_ITEM && i + firstIndex < list.size(); i ++) {
+            labels[i].setText(String.format("%03d %s", i + firstIndex + 1, list.get(i + firstIndex)));
         }
     }
 }

@@ -25,6 +25,11 @@
                   <Font size="30.0" />
                </font>
             </Label>
+            <Label fx:id="chartTitleLabel" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" textFill="#d1d1d1">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
             <VBox fx:id="boardVBox" alignment="TOP_CENTER" spacing="20.0" />
          </children>
          <padding>

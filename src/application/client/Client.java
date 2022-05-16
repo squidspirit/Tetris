@@ -2,9 +2,9 @@ package application.client;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class Client implements AutoCloseable {
@@ -15,9 +15,10 @@ public class Client implements AutoCloseable {
     private BufferedWriter bufferedWriter;
     private Socket socket;
 
-    public Client(String host, int port) throws IOException {
-        socket = new Socket(host, port);
-        socket.setSoTimeout(1000);
+    public Client(String host, int port) throws Exception {
+        socket = new Socket();
+        socket.connect(new InetSocketAddress(host, port), 500);
+        socket.setSoTimeout(500);
         System.out.println("Connected.");
         inputStreamReader = new InputStreamReader(socket.getInputStream());
         outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
@@ -25,7 +26,7 @@ public class Client implements AutoCloseable {
         bufferedWriter = new BufferedWriter(outputStreamWriter);
     }
 
-    public String send(String message) throws IOException {
+    public String send(String message) throws Exception {
         System.out.println("[CLIENT] " + message);
         bufferedWriter.write(message);
         bufferedWriter.newLine();
