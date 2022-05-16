@@ -48,28 +48,30 @@ public class RankingScreenController implements KeyPressed, Initializable {
         leaderBoard = new LeaderBoard(dataList);
         boardVBox.getChildren().add(leaderBoard);
         cursorTimer.start();
-        SoundController.play(Sounds.PAUSE_IN);
     }
 
     private void updateLeaderBoard() {
         dataList = requestLeaderBoard();
         leaderBoard.setList(dataList);
+        SoundController.play(Sounds.PAUSE_IN);
     }
 
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.SPACE)
-            SceneController.show(Scenes.RANKING_SCREEN, true);
+        if (dataList.isEmpty() && keyEvent.getCode() == KeyCode.SPACE)
+            updateLeaderBoard();
         
         if (keyEvent.getCode() == KeyCode.ESCAPE) {
             SceneController.show(Scenes.PLAY_SCREEN, false);
             SoundController.play(Sounds.PAUSE_OUT);
         }
-        else if (keyEvent.getCode() == KeyCode.UP) 
-            leaderBoard.scrollUp();
-        else if (keyEvent.getCode() == KeyCode.DOWN)
-            leaderBoard.scrollDown();
+        else if (keyEvent.getCode() == KeyCode.UP) {
+            if (leaderBoard.scrollUp()) SoundController.play(Sounds.MOVE);
+        }
+        else if (keyEvent.getCode() == KeyCode.DOWN) {
+            if (leaderBoard.scrollDown()) SoundController.play(Sounds.MOVE);
+        }
         
         String keyText = keyEvent.getText().toUpperCase();
         if (enterLock || dataList.isEmpty()) return;
@@ -89,6 +91,7 @@ public class RankingScreenController implements KeyPressed, Initializable {
                 hintTimer.start();
                 sendData(String.format("%06d,%s", score, name));
                 updateLeaderBoard();
+                SoundController.play(Sounds.SCORE_BIG);
             }
         }
     }

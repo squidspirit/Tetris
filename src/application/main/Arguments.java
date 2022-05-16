@@ -4,6 +4,8 @@ import application.functions.Vector2D;
 
 final public class Arguments {
 
+    final public static String VERSION = "1.1";
+
     final public static String SERVER_HOST = "squidspirit.com";
     final public static int SERVER_PORT = 9217;
     final public static String DATA_PATH = "%appdata%/Tetris";

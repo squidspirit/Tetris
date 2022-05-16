@@ -40,18 +40,22 @@ public class LeaderBoard extends VBox {
         this.update();
     }
 
-    public void scrollUp() {
+    public boolean scrollUp() {
         if (firstIndex > 0) {
             firstIndex --;
             this.update();
+            return true;
         }
+        return false;
     }
 
-    public void scrollDown() {
+    public boolean scrollDown() {
         if (firstIndex < list.size() - MAX_ITEM) {
             firstIndex ++;
             this.update();
+            return true;
         }
+        return false;
     }
 
 

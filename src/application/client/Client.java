@@ -7,7 +7,11 @@ import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import application.main.Arguments;
+
 public class Client implements AutoCloseable {
+
+    final private int TIMEOUT = 500;
     
     private InputStreamReader inputStreamReader;
     private OutputStreamWriter outputStreamWriter;
@@ -17,13 +21,15 @@ public class Client implements AutoCloseable {
 
     public Client(String host, int port) throws Exception {
         socket = new Socket();
-        socket.connect(new InetSocketAddress(host, port), 500);
-        socket.setSoTimeout(500);
+        socket.connect(new InetSocketAddress(host, port), TIMEOUT);
+        socket.setSoTimeout(TIMEOUT);
         System.out.println("Connected.");
         inputStreamReader = new InputStreamReader(socket.getInputStream());
         outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
         bufferedReader = new BufferedReader(inputStreamReader);
         bufferedWriter = new BufferedWriter(outputStreamWriter);
+
+        send(Arguments.VERSION);
     }
 
     public String send(String message) throws Exception {

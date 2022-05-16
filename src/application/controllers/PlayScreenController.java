@@ -188,16 +188,13 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         if (shape == null) return;
         switch (keyEvent.getCode()) {
             case LEFT:
-                SoundController.play(Sounds.MOVE);
-                shape.left();
+                if (shape.left()) SoundController.play(Sounds.MOVE);
                 break;
             case RIGHT:
-                SoundController.play(Sounds.MOVE);
-                shape.right();
+                if (shape.right()) SoundController.play(Sounds.MOVE);
                 break;
             case UP:
-                SoundController.play(Sounds.MOVE);
-                shape.rotate();
+                if (shape.rotate()) SoundController.play(Sounds.MOVE);
                 break;
             case DOWN:
                 SoundController.play(Sounds.MOVE);

@@ -16,42 +16,50 @@ import java.util.Map.Entry;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.TreeMultimap;
 
+import application.main.Arguments;
+
 public class Main {
     public static void main(String[] args) throws IOException {
 
         System.out.println("Server started.");
 
         final String FILENAME = "ranking";
+        final int TIMEOUT = 1000;
 
         InputStreamReader inputStreamReader = null;
         OutputStreamWriter outputStreamWriter = null;
         BufferedReader reader = null;
         BufferedWriter writer = null;
         Socket socket = null;
-        String command;
+        String command = null;
         ServerSocket serverSocket = new ServerSocket(9217);
 
         try {
             while (true) {
 
                 socket = serverSocket.accept();
+                socket.setSoTimeout(TIMEOUT);
                 inputStreamReader = new InputStreamReader(socket.getInputStream());
                 outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
                 reader = new BufferedReader(inputStreamReader);
                 writer = new BufferedWriter(outputStreamWriter);
 
                 System.out.println("New connection.");
+                command = readMessage(reader);
+                if (!command.equals(Arguments.VERSION)) {
+                    sendMessage(writer, "REJECT");
+                    continue;
+                }
+                sendMessage(writer, "ACCEPT");
 
                 try {
                     while (true) {
 
-                        command = reader.readLine();
-                        System.out.println("[CLIENT] " + command);
+                        command = readMessage(reader);
 
                         if (command.toUpperCase().equals("SEND")) {
                             sendMessage(writer, "ACCEPT");
-                            command = reader.readLine();
-                            System.out.println("[CLIENT] " + command);
+                            command = readMessage(reader);
                             String[] requestList = command.split(",");
                             
                             TreeMultimap<Integer, String> multimap = TreeMultimap.create(Ordering.natural().reverse(), Ordering.natural());
@@ -79,8 +87,7 @@ public class Main {
                             sendMessage(writer, "ACCEPT");
                             try (BufferedReader fileReader = new BufferedReader(new FileReader(new File(FILENAME)))) {
                                 while (true) {
-                                    command = reader.readLine();
-                                    System.out.println("[CLIENT] " + command);
+                                    command = readMessage(reader);
                                     if (!command.toUpperCase().equals("NEXT")) break;
                                     String line = fileReader.readLine();
                                     if (line == null) break;
@@ -95,6 +102,7 @@ public class Main {
                             sendMessage(writer, "BYE");
                             break;
                         }
+                        else sendMessage(writer, "REJECT");
                     }
                 } catch (Exception exception) {
                     exception.printStackTrace();
@@ -116,10 +124,18 @@ public class Main {
         }
     }
 
+
+
     private static void sendMessage(BufferedWriter writer, String message) throws IOException {
         System.out.println("[SERVER] " + message);
         writer.write(message);
         writer.newLine();
         writer.flush();
+    }
+
+    private static String readMessage(BufferedReader reader) throws IOException {
+        String line = reader.readLine();
+        System.out.println("[CLIENT] " + line);
+        return line;
     }
 }
