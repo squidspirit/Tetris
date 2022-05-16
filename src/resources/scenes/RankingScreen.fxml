@@ -51,12 +51,12 @@
                <children>
                   <Label fx:id="nameLabel" focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" textFill="#d1d1d1">
                      <font>
-                        <Font size="30.0" />
+                        <Font size="32.0" />
                      </font>
                   </Label>
-                  <Label focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="_" textFill="#d1d1d1">
+                  <Label fx:id="cursorLabel" focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="_" textFill="#d1d1d1">
                      <font>
-                        <Font size="30.0" />
+                        <Font size="32.0" />
                      </font>
                   </Label>
                </children>

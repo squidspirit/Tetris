@@ -10,7 +10,7 @@ import javafx.scene.text.Font;
 
 public class LeaderBoard extends VBox {
 
-    final private int MAX_ITEM = 16;
+    final private int MAX_ITEM = 15;
     
     private ArrayList<String> list;
     private Label[] labels = new Label[MAX_ITEM];

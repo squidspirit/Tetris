@@ -20,6 +20,7 @@ public class RankingScreenController implements KeyPressed, Initializable {
     @FXML private Label scoreLabel;
     @FXML private Label nameLabel;
     @FXML private Label hintLabel;
+    @FXML private Label cursorLabel;
     @FXML private VBox boardVBox;
     
     private boolean enterLock;
@@ -31,6 +32,7 @@ public class RankingScreenController implements KeyPressed, Initializable {
     @Override
     public void initialiaze() {
         name = "";
+        nameLabel.setText("");
         enterLock = false;
         score = ((PlayScreenController)SceneController.getController(Scenes.PLAY_SCREEN)).getScore();
         scoreLabel.setText(String.format("%06d", score));
@@ -38,6 +40,7 @@ public class RankingScreenController implements KeyPressed, Initializable {
         boardVBox.getChildren().clear();
         leaderBoard = new LeaderBoard(dataList);
         boardVBox.getChildren().add(leaderBoard);
+        cursorTimer.start();
     }
 
     private void updateLeaderBoard() {
@@ -64,22 +67,38 @@ public class RankingScreenController implements KeyPressed, Initializable {
         }
         else if (keyEvent.getCode() == KeyCode.ENTER) {
             if (name.length() > 0) {
+                enterLock = true;
                 sendData(String.format("%06d,%s", score, name));
                 updateLeaderBoard();
-                enterLock = true;
             }
         }
     }
 
-    AnimationTimer textTimer = new AnimationTimer() {
-        public void handle(long now) {
+    AnimationTimer cursorTimer = new AnimationTimer() {
+        private int accumulatedFrames;
 
+        public void handle(long now) {
+            if (enterLock)
+                cursorTimer.stop();
+            if (accumulatedFrames == 40)
+                cursorLabel.setVisible(false);
+            else if (accumulatedFrames == 80) {
+                cursorLabel.setVisible(true);
+                accumulatedFrames = 0;
+            }
+            accumulatedFrames ++;
         };
-    };
 
-    AnimationTimer hintTimer = new AnimationTimer() {
-        public void handle(long now) {
+        public void start() {
+            accumulatedFrames = 0;
+            hintLabel.setVisible(true);
+            super.start();
+        };
 
+        public void stop() {
+            cursorLabel.setVisible(false);
+            hintLabel.setVisible(false);
+            super.stop();
         };
     };
 
