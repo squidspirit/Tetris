@@ -6,9 +6,17 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch Main",
+            "name": "Launch Main (application)",
             "request": "launch",
-            "mainClass": "application.main.Main",
+            "mainClass": "Main",
+            "vmArgs": "--module-path C:\\Compilers\\Java\\javafx-sdk-17.0.2\\lib --add-modules=javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main (server)",
+            "request": "launch",
+            "mainClass": "Main",
+            "args": "server",
             "vmArgs": "--module-path C:\\Compilers\\Java\\javafx-sdk-17.0.2\\lib --add-modules=javafx.controls,javafx.fxml"
         }
     ]

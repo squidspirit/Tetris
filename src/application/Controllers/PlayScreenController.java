@@ -76,6 +76,8 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         isPlayable = true;
     }
 
+    public int getScore() { return score; }
+
     private void init() {
         gamePaneSize = new Vector2D(
             gamePane.getWidth(),
@@ -165,6 +167,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         dropLock = false;
         isPlayable = true;
     }
+
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
@@ -257,7 +260,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         private boolean boardDone;
 
         public void handle(long now) {
-            if (accumulatedFrames % 40 == 0) {
+            if (boardDone &&accumulatedFrames % 40 == 0) {
                 if (accumulatedFrames % 80 == 0)
                     startLabel.setVisible(true);
                 else startLabel.setVisible(false);
@@ -282,6 +285,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
                     else {
                         isPlayable = true;
                         boardDone = true;
+                        if (isDead) SceneController.show(Scenes.RANKING_SCREEN, true);
                     }
                 }
                 boardBlockIndex = boardBlockIndex.add(nextBlockDirection);
@@ -367,7 +371,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
             for (Map.Entry<ShapeType, ShapeStatus> entry : map.entrySet()) {
                 Shape shape = new Shape(entry.getKey(), entry.getValue().pane, Arguments.BLOCK_SIZE);
                 if (entry.getKey() == ShapeType.I) shape.setPosition(new Vector2D(0, 0));
-                else if (entry.getKey() == ShapeType.O) shape.setPosition(new Vector2D(0, -1));
+                else if (entry.getKey() == ShapeType.O) shape.setPosition(new Vector2D(1, -1));
                 else shape.setPosition(new Vector2D(1, 0));
             }
         }

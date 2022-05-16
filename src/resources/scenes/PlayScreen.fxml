@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1120.0" style="-fx-background-color: Black; -fx-border-color: White; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.PlayScreenController">
+<GridPane fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1120.0" style="-fx-background-color: Black; -fx-border-color: White; -fx-border-width: 20;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.PlayScreenController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" percentWidth="25.0" />
     <ColumnConstraints hgrow="SOMETIMES" percentWidth="40.0" />

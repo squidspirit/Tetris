@@ -17,8 +17,9 @@ public class SceneController {
 
     public enum Scenes {
 
-        PLAY_SCREEN(new FXMLLoader(SceneController.class.getResource("/resources/PlayScreen.fxml"))),
-        PAUSE_SCREEN(new FXMLLoader(SceneController.class.getResource("/resources/PauseScreen.fxml")));
+        PLAY_SCREEN(new FXMLLoader(SceneController.class.getResource("/resources/scenes/PlayScreen.fxml"))),
+        PAUSE_SCREEN(new FXMLLoader(SceneController.class.getResource("/resources/scenes/PauseScreen.fxml"))),
+        RANKING_SCREEN(new FXMLLoader(SceneController.class.getResource("/resources/scenes/RankingScreen.fxml")));
 
         private FXMLLoader loader;
         private Scene scene;
@@ -52,10 +53,6 @@ public class SceneController {
 
     public static Stage stage;
 
-    public static void show(Scenes loader) {
-        show(loader, true);
-    }
-
     public static void show(Scenes loader, boolean newLoad) {
         if (newLoad) reload(loader);
 
@@ -82,5 +79,9 @@ public class SceneController {
 
     public static void reload(Scenes loader) {
         loader.reload();
+    }
+
+    public static Object getController(Scenes loader) {
+        return loader.getController();
     }
 }

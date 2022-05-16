@@ -4,8 +4,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1120.0" spacing="20.0" style="-fx-background-color: Black; -fx-border-color: White; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.PauseScreenController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1120.0" spacing="20.0" style="-fx-background-color: Black; -fx-border-color: White; -fx-border-width: 20;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.PauseScreenController">
    <children>
       <Label fx:id="titleLabel" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="PAUSED" textAlignment="CENTER" textFill="#d1d1d1">
          <font>

@@ -3,8 +3,11 @@ package application.main;
 import application.functions.Vector2D;
 
 final public class Arguments {
-    
+
+    final public static String SERVER_HOST = "squidspirit.com";
+    final public static int SERVER_PORT = 9217;
     final public static String DATA_PATH = "%appdata%/Tetris";
+    
     final public static Vector2D SCENE_SIZE = new Vector2D(800, 840);
     final public static Vector2D GAME_PAD_SIZE = new Vector2D(300, 600);
     final public static int BLOCK_SIZE = 30;
