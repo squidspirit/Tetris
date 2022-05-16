@@ -11,16 +11,16 @@
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1120.0" style="-fx-background-color: Black; -fx-border-color: White; -fx-border-width: 20;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.RankingScreenController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" percentWidth="65.0" />
+    <ColumnConstraints hgrow="SOMETIMES" percentWidth="60.0" />
     <ColumnConstraints hgrow="SOMETIMES" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <VBox alignment="TOP_CENTER" spacing="20.0">
+      <VBox alignment="TOP_CENTER" spacing="50.0">
          <children>
-            <Label style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="LEADERBOARD" textAlignment="CENTER" textFill="#d1d1d1">
+            <Label style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="LEADERBOARD" textAlignment="CENTER" textFill="#d1d1d1">
                <font>
                   <Font size="30.0" />
                </font>
@@ -35,47 +35,47 @@
          <children>
             <HBox alignment="CENTER_LEFT">
                <children>
-                  <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="SCORE: " textFill="#d1d1d1">
+                  <Label focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="SCORE: " textFill="#d1d1d1">
                      <font>
-                        <Font size="30.0" />
+                        <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="scoreLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label fx:id="scoreLabel" focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="30.0" />
+                        <Font size="24.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT">
                <children>
-                  <Label fx:id="nameLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" textFill="#d1d1d1">
+                  <Label fx:id="nameLabel" focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" textFill="#d1d1d1">
                      <font>
                         <Font size="30.0" />
                      </font>
                   </Label>
-                  <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" textFill="#d1d1d1">
+                  <Label focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="_" textFill="#d1d1d1">
                      <font>
                         <Font size="30.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <Label fx:id="hintLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="ENTER YOUR NAME TO UPLOAD&#10;YOUR SCORE TO THE SERVER" textFill="#d1d1d1">
+            <Label fx:id="hintLabel" focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="ENTER YOUR NAME TO UPLOAD&#10;YOUR SCORE TO THE SERVER" textFill="#d1d1d1">
                <font>
-                  <Font size="18.0" />
+                  <Font size="14.0" />
                </font>
             </Label>
             <HBox alignment="CENTER_LEFT">
                <children>
-                  <Label style="-fx-font-family: Zpix;" text="UP: &#10;DOWN: &#10;SPACE: &#10;ESC: " textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="UP: &#10;DOWN: &#10;SPACE: &#10;ESC: " textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label style="-fx-font-family: Zpix;" text="SCROLL UP&#10;SCROLL DOWN&#10;RELOAD&#10;BACK TO GAME" textFill="#d1d1d1">
+                  <Label style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="SCROLL UP&#10;SCROLL DOWN&#10;RELOAD&#10;BACK TO GAME" textFill="#d1d1d1">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="14.0" />
                      </font>
                   </Label>
                </children>

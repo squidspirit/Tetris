@@ -33,43 +33,43 @@
                <children>
                   <VBox alignment="TOP_RIGHT" spacing="10.0">
                      <children>
-                        <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="LEVEL: " textAlignment="RIGHT" textFill="#d1d1d1">
+                        <Label focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="LEVEL: " textAlignment="RIGHT" textFill="#d1d1d1">
                            <font>
-                              <Font size="30.0" />
+                              <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="SCORE: " textAlignment="RIGHT" textFill="#d1d1d1">
+                        <Label focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="SCORE: " textAlignment="RIGHT" textFill="#d1d1d1">
                            <font>
-                              <Font size="30.0" />
+                              <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="LINE: " textAlignment="RIGHT" textFill="LIGHTGRAY">
+                        <Label focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="LINE: " textAlignment="RIGHT" textFill="LIGHTGRAY">
                            <font>
-                              <Font size="30.0" />
+                              <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="NEXT: " textAlignment="RIGHT" textFill="LIGHTGRAY">
+                        <Label focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="NEXT: " textAlignment="RIGHT" textFill="LIGHTGRAY">
                            <font>
-                              <Font size="30.0" />
+                              <Font size="24.0" />
                            </font>
                         </Label>
                      </children>
                   </VBox>
                   <VBox spacing="10.0">
                      <children>
-                        <Label fx:id="levelLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" textFill="LIGHTGRAY">
+                        <Label fx:id="levelLabel" focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" textFill="LIGHTGRAY">
                            <font>
-                              <Font size="30.0" />
+                              <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="scoreLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" textFill="LIGHTGRAY">
+                        <Label fx:id="scoreLabel" focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" textFill="LIGHTGRAY">
                            <font>
-                              <Font size="30.0" />
+                              <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lineScoreLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" textFill="LIGHTGRAY">
+                        <Label fx:id="lineScoreLabel" focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" textFill="LIGHTGRAY">
                            <font>
-                              <Font size="30.0" />
+                              <Font size="24.0" />
                            </font>
                         </Label>
                      </children>
@@ -77,28 +77,28 @@
                </children>
             </HBox>
             <Pane fx:id="nextPane" maxHeight="150.0" maxWidth="150.0" prefHeight="150.0" prefWidth="150.0" />
-            <Label fx:id="startLabel" focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="PRESS ENTER TO START" textFill="#d1d1d1">
+            <Label fx:id="startLabel" focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="PRESS ENTER TO START" textFill="#d1d1d1">
                <font>
-                  <Font size="22.0" />
+                  <Font size="16.0" />
                </font>
             </Label>
             <HBox alignment="CENTER_LEFT">
                <children>
-                  <Label style="-fx-font-family: Zpix;" text="UP: &#10;L/R: &#10;DOWN: &#10;SPACE: &#10;ESC: " textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="UP: &#10;L/R: &#10;DOWN: &#10;SPACE: &#10;ESC: " textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label style="-fx-font-family: Zpix;" text="ROTATE&#10;MOVE&#10;DROP A BLOCK&#10;DROP TO BUTTOM&#10;PAUSE" textFill="#d1d1d1">
+                  <Label style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="ROTATE&#10;MOVE&#10;DROP A BLOCK&#10;DROP TO BUTTOM&#10;PAUSE" textFill="#d1d1d1">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="14.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <Label focusTraversable="false" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="POWERED BY SQUIDSPIRIT" textFill="#d1d1d1">
+            <Label focusTraversable="false" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="POWERED BY SQUIDSPIRIT" textFill="#d1d1d1">
                <font>
-                  <Font size="22.0" />
+                  <Font size="15.0" />
                </font>
             </Label>
          </children>
@@ -111,14 +111,14 @@
             <HBox alignment="CENTER_RIGHT" spacing="10.0">
                <children>
                   <Pane fx:id="statusIPane" prefHeight="90.0" prefWidth="120.0" />
-                  <Label style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="X" textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="X" textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="statusILabel" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="000" textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label fx:id="statusILabel" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="000" textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
                </children>
@@ -126,14 +126,14 @@
             <HBox alignment="CENTER_RIGHT" spacing="10.0">
                <children>
                   <Pane fx:id="statusJPane" prefHeight="90.0" prefWidth="120.0" />
-                  <Label style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="X" textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="X" textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="statusJLabel" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="000" textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label fx:id="statusJLabel" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="000" textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
                </children>
@@ -141,14 +141,14 @@
             <HBox alignment="CENTER_RIGHT" spacing="10.0">
                <children>
                   <Pane fx:id="statusLPane" prefHeight="90.0" prefWidth="120.0" />
-                  <Label style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="X" textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="X" textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="statusLLabel" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="000" textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label fx:id="statusLLabel" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="000" textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
                </children>
@@ -156,14 +156,14 @@
             <HBox alignment="CENTER_RIGHT" spacing="10.0">
                <children>
                   <Pane fx:id="statusOPane" prefHeight="90.0" prefWidth="120.0" />
-                  <Label style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="X" textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="X" textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="statusOLabel" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="000" textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label fx:id="statusOLabel" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="000" textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
                </children>
@@ -171,14 +171,14 @@
             <HBox alignment="CENTER_RIGHT" spacing="10.0">
                <children>
                   <Pane fx:id="statusSPane" prefHeight="90.0" prefWidth="120.0" />
-                  <Label style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="X" textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="X" textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="statusSLabel" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="000" textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label fx:id="statusSLabel" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="000" textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
                </children>
@@ -186,14 +186,14 @@
             <HBox alignment="CENTER_RIGHT" spacing="10.0">
                <children>
                   <Pane fx:id="statusTPane" prefHeight="90.0" prefWidth="120.0" />
-                  <Label style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="X" textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="X" textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="statusTLabel" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="000" textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label fx:id="statusTLabel" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="000" textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
                </children>
@@ -201,14 +201,14 @@
             <HBox alignment="CENTER_RIGHT" spacing="10.0">
                <children>
                   <Pane fx:id="statusZPane" prefHeight="90.0" prefWidth="120.0" />
-                  <Label style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="X" textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="X" textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="statusZLabel" style="-fx-font-family: Zpix;" stylesheets="@FontStyle.css" text="000" textAlignment="RIGHT" textFill="#d1d1d1">
+                  <Label fx:id="statusZLabel" style="-fx-font-family: Kongtext;" stylesheets="@../fonts/FontStyle.css" text="000" textAlignment="RIGHT" textFill="#d1d1d1">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
                </children>

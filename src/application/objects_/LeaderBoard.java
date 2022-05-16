@@ -10,7 +10,7 @@ import javafx.scene.text.Font;
 
 public class LeaderBoard extends VBox {
 
-    final private int MAX_ITEM = 10;
+    final private int MAX_ITEM = 16;
     
     private ArrayList<String> list;
     private Label[] labels = new Label[MAX_ITEM];
@@ -27,8 +27,8 @@ public class LeaderBoard extends VBox {
             labels[i] = new Label();
             labels[i].setFont(new Font(24));
             labels[i].setTextFill(Color.LIGHTGRAY);
-            labels[i].getStylesheets().add("/resources/scenes/FontStyle.css");
-            labels[i].setStyle("-fx-font-family: Zpix;");
+            labels[i].getStylesheets().add("/resources/fonts/FontStyle.css");
+            labels[i].setStyle("-fx-font-family: Kongtext;");
             super.getChildren().add(labels[i]);
         }
 
