@@ -24,7 +24,7 @@ public class Main {
         System.out.println("Server started.");
 
         final String FILENAME = "ranking";
-        final int TIMEOUT = 1000;
+        final int TIMEOUT = 500;
 
         InputStreamReader inputStreamReader = null;
         OutputStreamWriter outputStreamWriter = null;
@@ -44,15 +44,16 @@ public class Main {
                 reader = new BufferedReader(inputStreamReader);
                 writer = new BufferedWriter(outputStreamWriter);
 
-                System.out.println("New connection.");
-                command = readMessage(reader);
-                if (!command.equals(Arguments.VERSION)) {
-                    sendMessage(writer, "REJECT");
-                    continue;
-                }
-                sendMessage(writer, "ACCEPT");
-
                 try {
+
+                    System.out.println("New connection.");
+                    command = readMessage(reader);
+                    if (!command.equals(Arguments.VERSION)) {
+                        sendMessage(writer, "REJECT");
+                        continue;
+                    }
+                    sendMessage(writer, "ACCEPT");
+
                     while (true) {
 
                         command = readMessage(reader);
@@ -114,6 +115,8 @@ public class Main {
                 reader.close();
                 writer.close();
             }
+        } catch (Exception exception) {
+            exception.printStackTrace();
         } finally {
             if (socket != null) socket.close();
             if (inputStreamReader != null) inputStreamReader.close();
