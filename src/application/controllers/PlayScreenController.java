@@ -65,9 +65,9 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
     private ShapeCount shapeConut;
 
     @Override
-    public void initialiaze() {
+    public void init() {
         shapeConut = new ShapeCount();
-        init();
+        reset();
         defaultTimer.start();
     }
 
@@ -78,7 +78,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
 
     public int getScore() { return score; }
 
-    private void init() {
+    private void reset() {
         gamePaneSize = new Vector2D(
             gamePane.getWidth(),
             gamePane.getHeight()
@@ -174,7 +174,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
         if (!isPlayable) return;
         if (!isPlaying) {
             if (keyEvent.getCode() == KeyCode.ENTER) {
-                if (isDead) init();
+                if (isDead) reset();
                 SoundController.play(Sounds.START);
                 nextShape = new Shape(ShapeType.getRandom(), nextPane, Arguments.BLOCK_SIZE);
                 nextShape.setPosition(new Vector2D(1, 1));

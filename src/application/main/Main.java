@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         stage.setTitle("TETRIS");
         stage.setResizable(false);
-        SceneController.stage = stage;
+        SceneController.setStage(stage);
         SceneController.show(Scenes.PLAY_SCREEN, true);
     }
 }

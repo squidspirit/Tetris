@@ -51,7 +51,7 @@ public class SceneController {
     
 
 
-    public static Stage stage;
+    private static Stage stage;
 
     public static void show(Scenes loader, boolean newLoad) {
         if (newLoad) reload(loader);
@@ -69,12 +69,16 @@ public class SceneController {
             });
 
             if (loader.getController() instanceof Initializable)
-                ((Initializable)loader.getController()).initialiaze();
+                ((Initializable)loader.getController()).init();
         }
         else {
             if (loader.getController() instanceof Pausable)
                 ((Pausable)loader.getController()).resume();
         }
+    }
+
+    public static void setStage(Stage stage) {
+        SceneController.stage = stage;
     }
 
     public static void reload(Scenes loader) {

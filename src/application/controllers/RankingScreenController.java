@@ -35,7 +35,7 @@ public class RankingScreenController implements KeyPressed, Initializable {
     private ArrayList<String> dataList = new ArrayList<>();
 
     @Override
-    public void initialiaze() {
+    public void init() {
         name = "";
         nameLabel.setText("");
         enterLock = false;
@@ -75,14 +75,16 @@ public class RankingScreenController implements KeyPressed, Initializable {
         
         String keyText = keyEvent.getText().toUpperCase();
         if (enterLock || dataList.isEmpty()) return;
-        if (keyText.length() > 0 && name.length() <= 10 &&
+        if (keyText.length() > 0 && name.length() < 10 &&
                 keyText.charAt(0) >= 'A' && keyText.charAt(0) <= 'Z') {
             name += keyText;
             nameLabel.setText(name);
+            SoundController.play(Sounds.MOVE);
         }
         else if (name.length() > 0 && keyEvent.getCode() == KeyCode.BACK_SPACE) {
             name = name.substring(0, name.length() - 1);
             nameLabel.setText(name);
+            SoundController.play(Sounds.MOVE);
         }
         else if (keyEvent.getCode() == KeyCode.ENTER) {
             if (name.length() > 0) {

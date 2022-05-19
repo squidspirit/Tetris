@@ -16,7 +16,7 @@ public class PauseScreenController implements KeyPressed, Initializable {
     @FXML private Label subtitleLabel;
 
     @Override
-    public void initialiaze() {
+    public void init() {
         defaultTimer.start();
     }
 
