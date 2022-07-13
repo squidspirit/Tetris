@@ -1,5 +1,6 @@
 package application.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,6 +64,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
     private boolean dropLock;
     private Vector2D gamePaneSize;
     private ShapeCount shapeConut;
+    private ArrayList<KeyCode> lastPressed = new ArrayList<>();
 
     @Override
     public void init() {
@@ -171,6 +173,7 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
+        
         if (!isPlayable) return;
         if (!isPlaying) {
             if (keyEvent.getCode() == KeyCode.ENTER) {
@@ -185,6 +188,38 @@ public class PlayScreenController implements KeyPressed, Initializable, Pausable
             }
             return;
         }
+
+        lastPressed.add(keyEvent.getCode());
+        for (int i = 0; i < Arguments.CHEAT_CODE.length && i < lastPressed.size(); i ++) {
+            if (lastPressed.get(i) != Arguments.CHEAT_CODE[i]) {
+                lastPressed.clear();
+                break;
+            }
+            if (i == Arguments.CHEAT_CODE.length - 1) {
+                while (shape.drop());
+                shape.decompose();
+                Block[][] blocks = new Block[gamePaneSize.getY()][gamePaneSize.getX()];
+                for (Object block : gamePane.getChildren()) {
+                    if (block instanceof Block) {
+                        Vector2D pos = ((Block)block).getPosition();
+                        int[] lines = new int[gamePaneSize.getY()];
+                        lines[pos.getY()] ++;
+                        blocks[pos.getY()][pos.getX()] = (Block)block;
+                    }
+                }
+                for (int y = 0; y < gamePaneSize.getY(); y ++) {
+                    for (int j = 0; j < y; j ++)
+                        for (Block block : blocks[j])
+                            if (block != null)
+                                block.setPosition(block.getPosition().add(new Vector2D(0, 1)));
+                    gamePane.getChildren().removeAll(blocks[y]);
+                    System.gc();
+                }
+                shape = null;
+                lastPressed.clear();
+            }
+        }
+        
         if (shape == null) return;
         switch (keyEvent.getCode()) {
             case LEFT:

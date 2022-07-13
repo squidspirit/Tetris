@@ -1,12 +1,13 @@
 package application.main;
 
 import application.functions.Vector2D;
+import javafx.scene.input.KeyCode;
 
 final public class Arguments {
 
     final public static String VERSION = "1.1";
 
-    final public static String SERVER_HOST = "squidspirit.com";
+    final public static String SERVER_HOST = "play.squidspirit.com";
     final public static int SERVER_PORT = 9217;
     final public static String DATA_PATH = "%appdata%/Tetris";
     
@@ -32,5 +33,11 @@ final public class Arguments {
          4,  3,  3,  3,  2,
          2,  2,  2,  2,  2,
          2,  2,  2,  2,  1
+    };
+
+    final public static KeyCode[] CHEAT_CODE = {
+        KeyCode.UP, KeyCode.UP, KeyCode.DOWN, KeyCode.DOWN, 
+        KeyCode.LEFT, KeyCode.RIGHT, KeyCode.LEFT, KeyCode.RIGHT,
+        KeyCode.A, KeyCode.B
     };
 }
